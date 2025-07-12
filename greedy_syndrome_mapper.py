@@ -107,6 +107,7 @@ class GreedySyndromeMapper:
                 # If the for loop ends normally (not broken), it means no suitable syndrome was found
                 raise RuntimeError(f"Could not find a valid syndrome for basis vector {basis_vector}.")
 
+
     def get_basis_map_list(self) -> list[list[list[int]]]:
         """
         Return the mapping of basis vectors in the original code format.
@@ -119,11 +120,25 @@ class GreedySyndromeMapper:
                 output.append([list(basis_v), list(syndrome)])
         return output
 
+    def get_parity_check_matrix(self) -> list[list[int]]:
+        """
+        Generates the parity check matrix from the given error pattern set.
+        """
+        syndromes = [list(self.syndrome_map[v]) for v in self.sorted_error_patterns if v in self.syndrome_map]
+        syndromes = syndromes[::-1]
+        if syndromes:
+            min_idx = min((next((i for i, v in enumerate(row) if v != 0), len(row)) for row in syndromes), default=0)
+            syndromes = [row[min_idx:] for row in syndromes]
+            matrix = np.array(syndromes)
+            return matrix.T.tolist()
+        return []
+
 # --- Example ---
 if __name__ == '__main__':
     # Generate all nonzero binary vectors of length n=3 as T
     n = 3
     T = [list(v) for v in itertools.product([0, 1], repeat=n) if any(v)]
+
     try:
         mapper = GreedySyndromeMapper(T)
         print("Full syndrome mapping (vector -> syndrome):")
@@ -135,12 +150,18 @@ if __name__ == '__main__':
         for basis_v, syndrome_v in basis_map:
             print(f"  {basis_v} -> {syndrome_v}")
 
+        print("\nParity check matrix:")
+        parity_matrix = mapper.get_parity_check_matrix()
+        for row in parity_matrix:
+            print(' '.join(str(x) for x in row))
+
     except (ValueError, RuntimeError) as e:
         print(f"Error: {e}")
 
     # Second example: n=7, T is all unit basis vectors
     n2 = 7
     T2 = [[int(i == j) for i in range(n2)] for j in range(n2)]
+
     try:
         mapper2 = GreedySyndromeMapper(T2)
         print("\n[Example 2] Syndrome mapping for all basis vectors (n=7):")
@@ -150,5 +171,10 @@ if __name__ == '__main__':
         basis_map2 = mapper2.get_basis_map_list()
         for basis_v, syndrome_v in basis_map2:
             print(f"  {basis_v} -> {syndrome_v}")
+
+        print("\n[Example 2] Parity check matrix:")
+        parity_matrix2 = mapper2.get_parity_check_matrix()
+        for row in parity_matrix2:
+            print(' '.join(str(x) for x in row))
     except (ValueError, RuntimeError) as e:
         print(f"[Example 2] Error: {e}")
