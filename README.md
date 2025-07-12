@@ -1,6 +1,6 @@
 # LTC_presentation_tools
 Tools for presenting syndrome maps in greedy loop traversal codes.
-
+.
 ## About This Project
 This repository contains the code implementation for the Master's thesis, "Loop Transversal Code".
 
