@@ -48,7 +48,7 @@ class GreedySyndromeMapper:
                 self._basis_vectors[i] = self._highest_dim_groups[i][0]
 
     @staticmethod
-    def _xor_sum(vectors) -> tuple[int] | None:
+    def _xor_sum(vectors) -> tuple[int, ...] | None:
         if not vectors:
             return None
         arr = np.array(vectors, dtype=np.uint8)
