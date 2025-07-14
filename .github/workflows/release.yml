@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
+      - name: Run tests
+        run: pytest --maxfail=2 --disable-warnings
+      - name: Build executable
+        run: |
+          pyinstaller main.py --onefile --name LTC_tools
+      - name: Upload release asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/LTC_tools*
+          body: |
+            ## Release ${{ github.ref_name }}
+            
+            This release includes the latest version of LTC_tools for all platforms.
+            
+            **Features:**
+            - Syndrome mapping CLI
+            - Multi-platform auto build
+            - Parity check matrix logic update
+            - Improved test coverage
+            
+            **Usage:**
+            Download the executable for your platform and run `LTC_tools` (or `LTC_tools.exe` on Windows).
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
