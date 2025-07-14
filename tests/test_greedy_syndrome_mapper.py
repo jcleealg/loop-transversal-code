@@ -26,16 +26,16 @@ def test_basic_mapping_n3():
     ]]
     mapper = GreedySyndromeMapper(T)
     # Should have three syndromes
-    assert len(mapper.syndrome_map) == 3
+    assert len(mapper.syndrome_map) == n
     # Syndromes should be unique
     syndromes = list(mapper.syndrome_map.values())
-    assert len(set(syndromes)) == 3
+    assert len(set(syndromes)) == n
     # Basis map format should be correct
     basis_map = mapper.get_basis_map_list()
     assert all(isinstance(b, list) and isinstance(s, list) for b, s in basis_map)
 
 def test_parity_check_matrix_shape_and_type():
-    n = 3
+    #n = 3
     T = [list(v) for v in [
         [1,0,0], [0,1,0], [0,0,1]
     ]]
@@ -47,7 +47,7 @@ def test_parity_check_matrix_shape_and_type():
     #assert matrix.shape[0] == n <-- it's wrong!
 
 def test_full_nonzero_vectors_n3():
-    n = 3
+    #n = 3
     T = [list(v) for v in [
         [1,0,0], [0,1,0], [0,0,1], [1,1,0], [1,0,1], [0,1,1], [1,1,1]
     ]]
@@ -70,7 +70,7 @@ def test_basis_vector_selection():
     ]
     mapper = GreedySyndromeMapper(T)
     # Should have 4 basis vectors
-    assert len(mapper._basis_vectors) == 4
+    assert len(mapper._basis_vectors) == n
 
 #def test_runtime_error_on_unsolvable():
     # Construct a theoretically unmappable case
