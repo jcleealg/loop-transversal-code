@@ -1,4 +1,3 @@
-
 # Loop Transversal Code Project
 
 This repository provides tools for constructing and presenting syndrome maps in greedy loop transversal codes, as part of the Master's thesis "Loop Transversal Code".
@@ -20,8 +19,8 @@ This project is based on the following Master's thesis:
 - `main.py`: Typer-based CLI for syndrome mapping and parity check matrix generation.
 - `greedy_syndrome_mapper.py`: Core greedy algorithm implementation.
 - `tests/`: Pytest test cases for main features.
-- `archive/GLTC_presentation.py`: Demo script for parity-check matrix construction.
-- `archive/tools.py`: Core greedy algorithm (archived version).
+- `archive/GLTC_presentation.py`: Demo script for parity-check matrix construction (archived draft).
+- `archive/tools.py`: Early prototype of the greedy algorithm (archived, for reference only).
 
 ## Installation
 Install all required dependencies:
@@ -66,5 +65,9 @@ python main.py --show-completion
 Use this to manually copy or customize the installation.
 
 Once installed, you can use the tab key to autocomplete commands and options when typing `python main.py` in your terminal.
+
+## Archive
+
+The `archive/` folder contains early drafts and prototype scripts from the initial development phase. These files are preserved for reference and historical context, but are not maintained or recommended for direct use.
 
 ---
