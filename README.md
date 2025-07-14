@@ -1,24 +1,66 @@
-# LTC_presentation_tools
-Tools for presenting syndrome maps in greedy loop traversal codes.
 
-## About This Project
-This repository contains the code implementation for the Master's thesis, "Loop Transversal Code".
+# Loop Transversal Code Project
 
-* **Traditional Method**: Design an error-correcting "code" first, then analyze what errors it can fix.
-* **Loop Transversal Code Method**: This method does the reverse. It starts with a "list of errors" you want to fix, and then uses an algorithm to build a custom code for that list. This project implements the "Greedy construction" algorithm to demonstrate the process.
+This repository provides tools for constructing and presenting syndrome maps in greedy loop transversal codes, as part of the Master's thesis "Loop Transversal Code".
 
-## Files
-* **`GLTC_presentation.py`**: Run this file to see the demo.
-* **`tools.py`**: Contains the core greedy algorithm code.
+## Project Overview
+Traditional error-correcting codes are designed first, then analyzed to determine which errors they can correct. In contrast, the Loop Transversal Code method starts with a list of errors you want to fix, and uses a greedy algorithm to build a custom code tailored to that list. This project demonstrates the greedy construction process and provides CLI tools for exploring syndrome mappings and parity check matrices.
 
-## How to Run
-1.  **Install numpy:**
-    ```bash
-    pip install numpy
-    ```
+## Main Features
+- `full-syndrome-mapping`: Display syndrome mappings for all error patterns.
+- `basis-mapping`: Display syndrome mappings for basis vectors.
+- `parity-check-matrix`: Output the parity check matrix.
+- `all-mapping`: Run all three features in sequence.
 
-2.  **Run the main script:**
-    ```bash
-    python GLTC_presentation.py
-    ```
-    The script will print the parity-check matrix constructed from the error list `T_given_1`.
+## File Structure
+- `main.py`: Typer-based CLI for syndrome mapping and parity check matrix generation.
+- `greedy_syndrome_mapper.py`: Core greedy algorithm implementation.
+- `tests/`: Pytest test cases for main features.
+- `archive/GLTC_presentation.py`: Demo script for parity-check matrix construction.
+- `archive/tools.py`: Core greedy algorithm (archived version).
+
+## Installation
+Install all required dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+## Example Usage
+```powershell
+# Example 1: Simple basis
+python main.py all-mapping --error-patterns "[[1,0,0],[0,1,0],[0,0,1]]"
+
+# Example 2: Custom error patterns
+python main.py all-mapping --error-patterns "[[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,0,1,1],[0,0,0,1,0,0],[0,0,0,1,1,0],[0,0,1,0,0,0],[0,0,1,1,0,0],[0,1,0,0,0,0],[0,1,1,0,0,0],[1,0,0,0,0,0],[1,1,0,0,0,0]]"
+
+# Example 3: Standard basis
+python main.py parity-check-matrix --standard-basis 3
+```
+
+## How to Test
+
+To run all tests and verify the core logic, use:
+```bash
+pytest
+```
+This will automatically discover and execute all test cases in the `tests/` folder. Make sure all dependencies are installed before running tests.
+
+## Typer CLI Autocompletion
+
+This CLI supports command and option autocompletion for a smoother user experience.
+
+**Install autocompletion** (run once):
+```powershell
+python main.py --install-completion
+```
+After running, follow the instructions to add the output to your shell profile (PowerShell, bash, zsh, etc.).
+
+**Show autocompletion script**:
+```powershell
+python main.py --show-completion
+```
+Use this to manually copy or customize the installation.
+
+Once installed, you can use the tab key to autocomplete commands and options when typing `python main.py` in your terminal.
+
+---

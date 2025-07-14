@@ -16,7 +16,10 @@ class GreedySyndromeMapper:
         if not all(len(v) == n for v in error_patterns):
             raise ValueError("All vectors in error_patterns must have the same length.")
 
-        self.sorted_error_patterns = [tuple(v) for v in sorted(error_patterns)] # Use sorted error_patterns as dictionary keys
+        # Convert to a set of tuples to remove duplicates, then sort.
+        # This ensures each error pattern is unique and processed only once.
+        unique_patterns = set(tuple(v) for v in error_patterns)
+        self.sorted_error_patterns = sorted(list(unique_patterns)) # Use sorted error_patterns as dictionary keys
         self._basis_vectors = {}  # Store the basis vector for each dimension
         self._highest_dim_groups = defaultdict(list) # Group error_patterns's vectors by their highest dimension
 
@@ -120,18 +123,24 @@ class GreedySyndromeMapper:
                 output.append([list(basis_v), list(syndrome)])
         return output
 
-    def get_parity_check_matrix(self) -> list[list[int]]:
+    def get_parity_check_matrix(self) -> np.ndarray:
         """
-        Generates the parity check matrix from the given error pattern set.
+        Generates the parity check matrix using only the syndromes corresponding to the basis vectors.
+        Returns a numpy.ndarray.
         """
-        syndromes = [list(self.syndrome_map[v]) for v in self.sorted_error_patterns if v in self.syndrome_map]
+        syndromes = []
+        for i in sorted(self._basis_vectors.keys()):
+            basis_v = self._basis_vectors[i]
+            syndrome = self.syndrome_map.get(basis_v, None)
+            if syndrome is not None:
+                syndromes.append(list(syndrome))
         syndromes = syndromes[::-1]
         if syndromes:
             min_idx = min((next((i for i, v in enumerate(row) if v != 0), len(row)) for row in syndromes), default=0)
             syndromes = [row[min_idx:] for row in syndromes]
-            matrix = np.array(syndromes)
-            return matrix.T.tolist()
-        return []
+            matrix = np.array(syndromes).T
+            return matrix
+        return np.array([])
 
 # --- Example ---
 if __name__ == '__main__':
@@ -152,8 +161,7 @@ if __name__ == '__main__':
 
         print("\nParity check matrix:")
         parity_matrix = mapper.get_parity_check_matrix()
-        for row in parity_matrix:
-            print(' '.join(str(x) for x in row))
+        print(parity_matrix)
 
     except (ValueError, RuntimeError) as e:
         print(f"Error: {e}")
@@ -174,7 +182,6 @@ if __name__ == '__main__':
 
         print("\n[Example 2] Parity check matrix:")
         parity_matrix2 = mapper2.get_parity_check_matrix()
-        for row in parity_matrix2:
-            print(' '.join(str(x) for x in row))
+        print(parity_matrix2)
     except (ValueError, RuntimeError) as e:
         print(f"[Example 2] Error: {e}")
