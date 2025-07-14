@@ -6,6 +6,10 @@ This repository provides tools for constructing and presenting syndrome maps in 
 ## Project Overview
 Traditional error-correcting codes are designed first, then analyzed to determine which errors they can correct. In contrast, the Loop Transversal Code method starts with a list of errors you want to fix, and uses a greedy algorithm to build a custom code tailored to that list. This project demonstrates the greedy construction process and provides CLI tools for exploring syndrome mappings and parity check matrices.
 
+## Reference
+This project is based on the following Master's thesis:
+- [Loop Transversal Code (NCKU Thesis Library)](https://thesis.lib.ncku.edu.tw/thesis/detail/4759066580a6172d56505500348dae66/)
+
 ## Main Features
 - `full-syndrome-mapping`: Display syndrome mappings for all error patterns.
 - `basis-mapping`: Display syndrome mappings for basis vectors.
