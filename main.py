@@ -13,11 +13,12 @@ def load_patterns(error_patterns: str = None, file: str = None, standard_basis: 
         # Directly parse string to list[list[int]]
         return ast.literal_eval(error_patterns)
     elif file:
+        # Read patterns from file, one pattern per line
         with open(file, 'r') as f:
             lines = f.readlines()
             return [ast.literal_eval(line.strip()) for line in lines if line.strip()]
     elif standard_basis is not None:
-        # Generate standard_basis
+        # Generate standard basis vectors
         n = standard_basis
         return [[int(i == j) for i in range(n)] for j in range(n)]
     else:
@@ -81,13 +82,17 @@ def all_mapping(error_patterns: str = typer.Option(None), file: str = typer.Opti
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 1:
-        print("No command-line arguments detected.")
-        cmd = input("Please enter CLI command and options (e.g. all-mapping --error-patterns [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,0,1,1],[0,0,0,1,0,0],[0,0,0,1,1,0],[0,0,1,0,0,0],[0,0,1,1,0,0],[0,1,0,0,0,0],[0,1,1,0,0,0],[1,0,0,0,0,0],[1,1,0,0,0,0]]):\n")
-        sys.argv += shlex.split(cmd)
-    try:
-        app()
-    except Exception as e:
-        print(f"Error: {e}")
-    finally:
-        input("Press Enter to exit...")
+    while True:
+        if len(sys.argv) == 1:
+            print("No command-line arguments detected.")
+            print("Example: all-mapping --error-patterns [[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,0,1,1],[0,0,0,1,0,0],[0,0,0,1,1,0],[0,0,1,0,0,0],[0,0,1,1,0,0],[0,1,0,0,0,0],[0,1,1,0,0,0],[1,0,0,0,0,0],[1,1,0,0,0,0]]")
+            cmd = input("Please enter CLI command and options (or type 'exit' to quit):\n")
+            if cmd.strip().lower() == "exit":
+                break
+            sys.argv = [sys.argv[0]] + shlex.split(cmd)
+        try:
+            app()
+        except Exception as e:
+            print(f"Error: {e}")
+        finally:
+            sys.argv = [sys.argv[0]]  # Reset, keep only script name
