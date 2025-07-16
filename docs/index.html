@@ -1,0 +1,458 @@
+<!-- HTML5 document type declaration -->
+<!DOCTYPE html>
+<!-- HTML root, language set to English -->
+<html lang="en">
+<!-- Head section: meta info and styles -->
+<head>
+  <!-- Set character encoding to UTF-8 -->
+  <meta charset="UTF-8">
+  <!-- Responsive design for mobile devices -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Page title -->
+  <title>Loop Transversal Code Interactive Web</title>
+  <!-- CSS styles for layout and appearance -->
+  <style>
+    /* Set font, background color, remove default margin/padding */
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif; /* Modern font */
+      background: #f5f4fb; /* Light blue background */
+      margin: 0;
+      padding: 0;
+    }
+    /* Main container: centered, white, rounded, shadow, padding */
+    .container {
+      max-width: 700px;
+      margin: 2em auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      padding: 2em 2.5em 2em 2.5em;
+    }
+    /* Title style: centered, dark color, margin bottom */
+    h1 {
+      text-align: center;
+      color: #2a3a5e;
+      margin-bottom: 0.5em;
+    }
+    /* Subtitle style: centered, gray-blue, margin, larger font */
+    .subtitle {
+      text-align: center;
+      color: #6c7a96;
+      margin-bottom: 2em;
+      font-size: 1.1em;
+    }
+    /* Label: bold, dark color */
+    label {
+      font-weight: 500;
+      color: #2a3a5e;
+    }
+    /* Input and textarea: full width, rounded, light background, border, margin */
+    textarea,
+    input {
+        width: 100%;
+        font-size: 1em;
+        border: 1px solid #dbe2ef;
+        border-radius: 6px;
+        padding: 0.5em;
+        margin: 0.5em 0 1em 0;
+        background: #f8f8fa;
+        box-sizing: border-box;
+        transition: border 0.2s;
+    }
+
+    /* Input focus: border color changes to blue */
+    textarea:focus,
+    input:focus {
+        border-color: #3f72af;
+        outline: none;
+    }
+
+    /* Button group: horizontal, gap, wrap, margin bottom */
+    /* Button group: grid layout for better control */
+    .btn-group {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 1em;
+      justify-items: center;
+      align-items: stretch;
+      margin-bottom: 1.5em;
+      padding: 0.5em 0;
+    }
+    /* Button style: blue background, white text, rounded, shadow, pointer, transition */
+    button {
+      background: #3f72af;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 0.8em 1.2em;
+      font-size: 1em;
+      font-weight: 500;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(63,114,175,0.08);
+      transition: background 0.2s, box-shadow 0.2s;
+      width: 100%;
+      min-width: 120px;
+      max-width: 220px;
+    }
+    /* Button hover: darker background, stronger shadow */
+    button:hover {
+      background: #2a3a5e;
+      box-shadow: 0 4px 16px rgba(63,114,175,0.15);
+    }
+    /* Output area: light background, rounded, monospace font, color, min height, shadow */
+    .output {
+      background: #f8f8fa;
+      padding: 1.2em;
+      border-radius: 8px;
+      margin-top: 1.5em;
+      font-family: 'Fira Mono', 'Consolas', monospace;
+      color: #2a3a5e;
+      white-space: pre-wrap;
+      min-height: 80px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    /* Responsive: smaller font and padding for screens <600px */
+    @media (max-width: 600px) {
+      .container { padding: 1em; }
+      h1 { font-size: 1.3em; }
+      .subtitle { font-size: 1em; }
+      .btn-group {
+        grid-template-columns: 1fr;
+        gap: 0.5em;
+        padding: 0.2em 0;
+      }
+      button {
+        font-size: 1em;
+        padding: 0.8em 0.8em;
+        min-width: 0;
+        max-width: 100%;
+      }
+    }
+  </style>
+<!-- End of head section -->
+</head>
+<!-- Body starts -->
+<body>
+  <!-- Main content container -->
+  <div class="container">
+    <!-- Main page title -->
+    <h1>Loop Transversal Code Interactive Web</h1>
+    <!-- Subtitle: page description -->
+    <div class="subtitle">Explore syndrome mappings and parity check matrices interactively.</div>
+    <!-- Error patterns input label -->
+    <label for="errorPatterns">Error Patterns:</label>
+    <!-- Error patterns input box, default is 3 standard basis vectors -->
+    <textarea id="errorPatterns" rows="3" placeholder="[[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,0,1,1],[0,0,0,1,0,0],[0,0,0,1,1,0],[0,0,1,0,0,0],[0,0,1,1,0,0],[0,1,0,0,0,0],[0,1,1,0,0,0],[1,0,0,0,0,0],[1,1,0,0,0,0]]">[[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0,0,1,1],[0,0,0,1,0,0],[0,0,0,1,1,0],[0,0,1,0,0,0],[0,0,1,1,0,0],[0,1,0,0,0,0],[0,1,1,0,0,0],[1,0,0,0,0,0],[1,1,0,0,0,0]]</textarea>
+    <!-- Standard basis input label -->
+    <label for="standardBasis">Or Standard Basis (n):</label>
+    <!-- Standard basis dimension input, n will generate n standard basis vectors -->
+    <input type="number" id="standardBasis" min="1" placeholder="e.g. 3">
+    <!-- Button group: four calculation functions -->
+    <div class="btn-group">
+      <button onclick="runAll()">Run All Mapping</button> <!-- Run all calculations -->
+      <button onclick="runFullSyndrome()">Full Syndrome Mapping</button> <!-- Show only syndrome mapping -->
+      <button onclick="runBasisMapping()">Basis Mapping</button> <!-- Show only basis mapping -->
+      <button onclick="runParityCheck()">Parity Check Matrix</button> <!-- Show only parity check matrix -->
+    </div>
+    <!-- Output area for results -->
+    <div class="output" id="output"></div>
+  <!-- End of main content container -->
+  </div>
+
+<!-- JavaScript section starts -->
+<script>
+// Parse user input: error patterns or standard basis
+function parsePatterns() {
+  const n = parseInt(document.getElementById('standardBasis').value); // Get standard basis dimension n
+  if (!isNaN(n) && n > 0) {
+    // If n is valid, generate n standard basis vectors (identity matrix)
+    return Array.from({length: n}, (_, j) => Array.from({length: n}, (_, i) => i === n-1-j ? 1 : 0));
+  }
+  try {
+    // Otherwise, parse error patterns from JSON string
+    return JSON.parse(document.getElementById('errorPatterns').value);
+  } catch {
+    // If parsing fails, return empty array
+    return [];
+  }
+}
+
+// Assume that standard basis is contained in error patterns
+function getBasisVectors(errors) {
+  const n = errors[0].length; // Vector dimension
+  return Array.from({length: n}, (_, j) => Array.from({length: n}, (_, i) => i === n-1-j ? 1 : 0));
+}
+
+
+
+// no need to check independence!!! //###
+// Check if vector v can be formed by linear combination of basis (binary vectors)
+
+
+// Check if arrays a and b are exactly equal
+function arraysEqual(a, b) {
+  return a.length === b.length && a.every((v, i) => v === b[i]);
+}
+
+// Build syndrome mapping (here just returns the vector itself)
+// In real use, should calculate syndrome from parity check matrix
+// Greedy syndrome mapping: assign syndromes dimension by dimension, use XOR for group members
+function syndromeMap(errors) {
+  const n = errors[0].length;
+  // Remove duplicates
+  let uniquePatterns = Array.from(new Set(errors.map(v => JSON.stringify(v)))).map(s => JSON.parse(s));
+  // Sort vectors before mapping
+  uniquePatterns = uniquePatterns.sort((a, b) => {
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] !== b[i]) return a[i] - b[i];
+    }
+    return 0;
+  });
+  // Group vectors by highest dimension (leftmost 1)
+  const groups = {};
+  uniquePatterns.forEach(v => {
+    const idx = v.indexOf(1);
+    if (idx !== -1) {
+      if (!groups[idx]) groups[idx] = [];
+      groups[idx].push(v);
+    }
+  });
+
+
+// Assume that the standard basis is included in the error patterns.
+  // Select basis: first vector in each group
+  const basis = getBasisVectors(errors);
+
+
+
+
+
+  // Generate all nonzero binary vectors of length n
+  const allVectors = [];
+  for (let i = 1; i < (1 << n); i++) {
+    const v = [];
+    for (let j = 0; j < n; j++) {
+      v.push((i >> (n - 1 - j)) & 1);
+    }
+    allVectors.push(v);
+  }
+
+
+  // Available syndromes (excluding the zero vector)
+  let availableSyndromes = allVectors.map(v => v.slice());
+  // Final mapping
+  const syndromeMapping = {};
+  // Assign syndromes to basis vectors, one dimension at a time
+  for (let k = 0; k < basis.length; k++) {
+    const b = basis[k];
+    let assigned = false;
+    // Try all available syndromes
+    for (let sIdx = 0; sIdx < availableSyndromes.length; sIdx++) {
+      const s = availableSyndromes[sIdx];
+      // Prepare the syndromes to assign
+      const syndromesToAssign = {};
+      syndromesToAssign[JSON.stringify(b)] = s;
+      const idx = b.indexOf(1);
+      const group = groups[idx];
+      let valid = true;
+      if (group) {
+        for (const v of group) {
+          if (arraysEqual(v, b)) continue;
+          const residual = v.map((x, idx) => x ^ b[idx]);
+          const residualKey = JSON.stringify(residual);
+          if (!syndromeMapping[residualKey]) {
+            valid = false;
+            break;
+          }
+          const syndromeOfV = s.map((x, idx) => x ^ syndromeMapping[residualKey][idx]);
+          // 1-1 check: syndromeOfV must not already be assigned to another vector
+          for (const assignedSyn of Object.values(syndromeMapping)) {
+            if (assignedSyn && assignedSyn.length === syndromeOfV.length && assignedSyn.every((x, i) => x === syndromeOfV[i])) {
+              valid = false;
+              break;
+            }
+          }
+
+          // Not necessary for the binary case, but can be used for more complex cases.
+          // 1-1 check: syndromes assigned in this layer must also be unique
+          /*
+          for (const key in syndromesToAssign) {
+            if (JSON.stringify(syndromesToAssign[key]) === JSON.stringify(syndromeOfV)) {
+              if (key !== JSON.stringify(v)) {
+                valid = false;
+                break;
+              }
+            }
+          }
+          */
+          syndromesToAssign[JSON.stringify(v)] = syndromeOfV;
+        }
+      }
+      if (!valid) continue;
+      // Check that all syndromes to assign are in availableSyndromes
+      const neededSyndromes = Object.values(syndromesToAssign);
+      const uniqueNeeded = neededSyndromes.map(syn => JSON.stringify(syn));
+      if (new Set(uniqueNeeded).size !== neededSyndromes.length) continue;
+      const availableSet = new Set(availableSyndromes.map(syn => JSON.stringify(syn)));
+      if (!neededSyndromes.every(syn => availableSet.has(JSON.stringify(syn)))) continue;
+      // Assign and remove used syndromes
+      for (const [vecKey, syn] of Object.entries(syndromesToAssign)) {
+        syndromeMapping[vecKey] = syn;
+      }
+      availableSyndromes = availableSyndromes.filter(syn => !uniqueNeeded.includes(JSON.stringify(syn)));
+      assigned = true;
+      break;
+    }
+    if (!assigned) {
+      throw new Error('Could not find a valid syndrome for basis vector ' + JSON.stringify(b));
+    }
+  }
+
+
+// Not necessary for the case containing standard basis vectors, but can be used for more complex cases.
+
+/*
+  // Assign syndromes to remaining vectors (if any)
+  for (const v of uniquePatterns) {
+    const key = JSON.stringify(v);
+    if (syndromeMapping[key]) continue;
+    // Try to represent v as basis XOR residual
+    let assigned = false;
+    for (const b of basis) {
+      const residual = v.map((x, idx) => x ^ b[idx]);
+      const residualKey = JSON.stringify(residual);
+      if (syndromeMapping[residualKey]) {
+        const s_v = syndromeMapping[JSON.stringify(b)].map((x, idx) => x ^ syndromeMapping[residualKey][idx]);
+        syndromeMapping[key] = s_v;
+        assigned = true;
+        break;
+      }
+    }
+    if (!assigned) syndromeMapping[key] = null;
+  }
+*/
+
+  return syndromeMapping;
+}
+
+// Generate parity check matrix (each basis vector is a row)
+// Generate parity check matrix using syndromes of basis vectors, trim leading zeros, transpose
+function getParityCheckMatrix(basis, mapObj) {
+  // Get syndromes for each basis vector
+  let syndromes = [];
+  for (const v of basis) {
+    const s = mapObj[JSON.stringify(v)];
+    if (s) syndromes.push(s.slice());
+  }
+  // Reverse order (to match Python)
+  syndromes = syndromes.reverse();
+  // Trim leading zeros (find first nonzero index in each row)
+  let minIdx = null;
+  for (const row of syndromes) {
+    const idx = row.findIndex(x => x !== 0);
+    if (idx !== -1) {
+      if (minIdx === null || idx < minIdx) minIdx = idx;
+    }
+  }
+  if (minIdx === null) minIdx = 0;
+  syndromes = syndromes.map(row => row.slice(minIdx));
+  // Transpose
+  const m = syndromes.length;
+  const n = syndromes[0] ? syndromes[0].length : 0;
+  const matrix = [];
+  for (let col = 0; col < n; col++) {
+    const rowArr = [];
+    for (let row = 0; row < m; row++) {
+      rowArr.push(syndromes[row][col]);
+    }
+    matrix.push(rowArr);
+  }
+  // Format as string
+  return matrix.map(row => row.join(' ')).join('\n');
+}
+
+// Run all calculations: show syndrome mapping, basis mapping, parity check matrix
+function runAll() {
+  const errors = parsePatterns();
+  if (!errors || errors.length === 0) {
+    document.getElementById('output').innerText = 'Please provide valid error patterns or standard basis.';
+    return;
+  }
+  let out = '';
+  // Show syndrome mapping
+  out += 'Full syndrome mapping (vector -> syndrome):\n';
+  const syndromeMapping = syndromeMap(errors);
+  // Sort vectors for output
+  const sortedVecs = Object.keys(syndromeMapping)
+    .map(s => JSON.parse(s))
+    .sort((a, b) => {
+      for (let i = 0; i < a.length; i++) {
+        if (a[i] !== b[i]) return a[i] - b[i];
+      }
+      return 0;
+    });
+  for (const v of sortedVecs) {
+    out += `  ${JSON.stringify(v)} -> ${JSON.stringify(syndromeMapping[JSON.stringify(v)])}\n`;
+  }
+  // Show basis mapping
+  out += '\nBasis mapping in original format:\n';
+  const basis = getBasisVectors(errors);
+  const mapObj = syndromeMapping;
+  for (const v of basis) {
+    out += `  ${JSON.stringify(v)} -> ${JSON.stringify(mapObj[JSON.stringify(v)])}\n`;
+  }
+  // Show parity check matrix
+  out += '\nParity check matrix:\n';
+  out += getParityCheckMatrix(basis, mapObj);
+  document.getElementById('output').innerText = out;
+}
+
+// Show only syndrome mapping
+function runFullSyndrome() {
+  const errors = parsePatterns();
+  if (!errors || errors.length === 0) {
+    document.getElementById('output').innerText = 'Please provide valid error patterns or standard basis.';
+    return;
+  }
+  let out = 'Full syndrome mapping (vector -> syndrome):\n';
+  const syndromeMapping = syndromeMap(errors);
+  for (const [vec, syn] of Object.entries(syndromeMapping)) {
+    out += `  ${vec} -> ${JSON.stringify(syn)}\n`;
+  }
+  document.getElementById('output').innerText = out;
+}
+
+// Show only basis mapping
+function runBasisMapping() {
+  const errors = parsePatterns();
+  if (!errors || errors.length === 0) {
+    document.getElementById('output').innerText = 'Please provide valid error patterns or standard basis.';
+    return;
+  }
+  let out = 'Basis mapping in original format:\n';
+  const basis = getBasisVectors(errors);
+  for (const v of basis) {
+    out += `  ${JSON.stringify(v)} -> ${JSON.stringify(v)}\n`;
+  }
+  document.getElementById('output').innerText = out;
+}
+
+// Show only parity check matrix
+function runParityCheck() {
+  const errors = parsePatterns();
+  if (!errors || errors.length === 0) {
+    document.getElementById('output').innerText = 'Please provide valid error patterns or standard basis.';
+    return;
+  }
+  let out = 'Parity check matrix:\n';
+  const basis = getBasisVectors(errors);
+  const syndromeMapObj = syndromeMap(errors);
+  out += getParityCheckMatrix(basis, syndromeMapObj);
+  document.getElementById('output').innerText = out;
+}
+<!-- End of JavaScript section -->
+</script>
+<!-- End of body -->
+</body>
+<!-- End of HTML document -->
+</html>
