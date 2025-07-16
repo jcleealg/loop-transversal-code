@@ -95,4 +95,4 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Error: {e}")
         finally:
-            sys.argv = [sys.argv[0]]  # Reset, keep only script name
+            sys.argv = [sys.argv[0]]   # Reset, keep only script name
