@@ -34,16 +34,25 @@ jobs:
           files: dist/LTC_tools*
           body: |
             ## Release ${{ github.ref_name }}
-            
+
             This release includes the latest version of LTC_tools for all platforms.
-            
+
+            **New in v1.1.0:**
+            - Interactive CLI: run multiple commands in one session, type 'exit' to quit
+
             **Features:**
             - Syndrome mapping CLI
             - Multi-platform auto build
             - Parity check matrix logic update
             - Improved test coverage
-            
+
             **Usage:**
             Download the executable for your platform and run `LTC_tools` (or `LTC_tools.exe` on Windows).
+            You can now enter commands interactively, e.g.:
+            ```
+            all-mapping --error-patterns [[0,0,0,0,0,1],[0,0,0,0,1,0],...]
+            basis-mapping --standard-basis 6
+            exit
+            ```
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
