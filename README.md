@@ -1,6 +1,17 @@
 # Loop Transversal Code Project
 
+
 This repository provides tools for constructing and presenting syndrome maps in greedy loop transversal codes, as part of the Master's thesis "Loop Transversal Code".
+
+## Online Loop Transversal Code Explorer
+
+An interactive web-based version of the Loop Transversal Code tool is available:
+
+👉 **[Loop Transversal Code Explorer](https://jcleealg.github.io/loop-transversal-code/)**
+
+Use this web app to explore syndrome mappings and parity check matrices directly in your browser. No installation required—just open the link and start experimenting with different error patterns and code parameters.
+
+---
 
 ## Project Overview
 Traditional error-correcting codes are designed first, then analyzed to determine which errors they can correct. In contrast, the Loop Transversal Code method starts with a list of errors you want to fix, and uses a greedy algorithm to build a custom code tailored to that list. This project demonstrates the greedy construction process and provides CLI tools for exploring syndrome mappings and parity check matrices.
