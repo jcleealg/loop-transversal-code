@@ -70,4 +70,5 @@ Once installed, you can use the tab key to autocomplete commands and options whe
 
 The `archive/` folder contains early drafts and prototype scripts from the initial development phase. These files are preserved for reference and historical context, but are not maintained or recommended for direct use.
 
+
 ---
