@@ -1,4 +1,4 @@
 [tool.ruff]
 exclude = [
-    "archive/"
+    "archive/", "docs/"
 ]
