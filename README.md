@@ -51,6 +51,10 @@ python main.py all-mapping --error-patterns "[[0,0,0,0,0,1],[0,0,0,0,1,0],[0,0,0
 python main.py parity-check-matrix --standard-basis 3
 ```
 
+When running the .exe by double-clicking, only one command can be executed per launch due to Windows console behavior. The program will exit after the command completes.
+For persistent interactive CLI (multiple commands in one session), please run the .exe from a command prompt (cmd or PowerShell).
+
+
 ## How to Test
 
 To run all tests and verify the core logic, use:

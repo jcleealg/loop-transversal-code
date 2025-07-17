@@ -48,6 +48,10 @@ jobs:
 
             **Usage:**
             Download the executable for your platform and run `LTC_tools` (or `LTC_tools.exe` on Windows).
+
+            When running the .exe by double-clicking, only one command can be executed per launch due to Windows console behavior. The program will exit after the command completes.
+            For persistent interactive CLI (multiple commands in one session), please run the .exe from a command prompt (cmd or PowerShell).
+
             You can now enter commands interactively, e.g.:
             ```
             all-mapping --error-patterns [[0,0,0,0,0,1],[0,0,0,0,1,0],...]
