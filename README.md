@@ -1,4 +1,4 @@
-# Loop Transversal Code Project
+# Loop Transversal Code
 
 
 This repository provides tools for constructing and presenting syndrome maps in greedy loop transversal codes, as part of the Master's thesis "Loop Transversal Code".
