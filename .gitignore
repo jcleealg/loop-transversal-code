@@ -32,3 +32,9 @@ Thumbs.db
 # Log and temp files
 *.log
 *.tmp
+
+# C++ build artifacts
+src_cpp/build/
+
+# C++ external dependencies (source/archives)
+src_cpp/external/

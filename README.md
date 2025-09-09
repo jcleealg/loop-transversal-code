@@ -32,6 +32,13 @@ This project is based on the following Master's thesis:
 - `tests/`: Pytest test cases for main features.
 - `archive/GLTC_presentation.py`: Demo script for parity-check matrix construction (archived draft).
 - `archive/tools.py`: Early prototype of the greedy algorithm (archived, for reference only).
+- `src_cpp/`: A C++ implementation of the core logic with an interactive CLI.
+
+## C++ Version
+
+A C++ version of the core logic is available in the `src_cpp/` directory. It provides an interactive command-line interface for the same greedy algorithm.
+
+For detailed build and usage instructions, please see the **[C++ README](./src_cpp/README.md)**.
 
 ## Installation
 Install all required dependencies:
